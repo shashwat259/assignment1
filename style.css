@@ -1,0 +1,32 @@
+.itemIMG {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  transform: translateY(15px);
+}
+.selected {
+  background-color: blue;
+  color: white;
+}
+.innerDiv {
+  width: 300px;
+  height: 60px;
+}
+figure img {
+  width: 400px;
+  height: 500px;
+  object-fit: cover;
+}
+main {
+  display: flex;
+}
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+textarea {
+  width: 400px;
+  display: block;
+  text-align: center;
+}
