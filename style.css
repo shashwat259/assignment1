@@ -1,8 +1,8 @@
 .itemIMG {
   width: 30px;
   height: 30px;
+  padding: 5px;
   object-fit: cover;
-  transform: translateY(15px);
 }
 .selected {
   background-color: blue;
@@ -11,6 +11,9 @@
 .innerDiv {
   width: 300px;
   height: 60px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
 }
 figure img {
   width: 400px;
@@ -27,6 +30,7 @@ main {
 }
 textarea {
   width: 400px;
+  border: none;
   display: block;
   text-align: center;
 }

@@ -2,11 +2,10 @@ import data from "./data.json" assert { type: "json" };
 
 const article = document.querySelector("article");
 var position = 0;
-const maxLength = 35;
 
 //this function handles the string which is too long
 const limitLength = (item) => {
-  if (item.length <= 35) return item;
+  if (item.length <= 32) return item;
   const newString = item.slice(0, 16) + "..." + item.slice(-16);
   return newString;
 };
@@ -16,7 +15,7 @@ data.forEach((item) => {
   newItem.classList.add("innerDiv");
   newItem.innerHTML = `
  <img src=${item.previewImage} alt="img" class="itemIMG">
-  <span>${limitLength(item.title)}</span>
+  <div>${limitLength(item.title)}</div>
     `;
   newItem.setAttribute("id", position);
   position++;
@@ -34,7 +33,7 @@ const nameFigure = document.createElement("textarea");
 nameFigure.value = data[0].title;
 figure.append(nameFigure);
 
-const listitems = document.querySelectorAll("article div");
+const listitems = document.querySelectorAll("article .innerDiv");
 listitems[0].classList.add("selected");
 
 //adding click event to all the image items
@@ -88,7 +87,7 @@ document.addEventListener("keydown", (e) => {
 
 nameFigure.addEventListener("input", (e) => {
   //handling the case when some change is made in the image name
-  listitems[position].querySelector("span").innerHTML = `${limitLength(
+  listitems[position].querySelector("div").innerHTML = `${limitLength(
     e.target.value
   )}`;
   data[position].title = e.target.value;
