@@ -1,36 +1,46 @@
-.itemIMG {
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body {
+  height: 100%;
+}
+main {
+  height: 100%;
+}
+html {
+  height: 100%;
+}
+.leftimg {
   width: 30px;
   height: 30px;
   padding: 5px;
   object-fit: cover;
 }
-.selected {
-  background-color: blue;
-  color: white;
-}
 .innerDiv {
-  width: 300px;
-  height: 60px;
-  border-radius: 5px;
   display: flex;
   align-items: center;
+  width: 300px;
+  border-radius: 5px;
+  font-size: 16px;
 }
-figure img {
+.rightContainer {
+  display: flex;
+  flex-direction: column;
+}
+.caption {
+  text-align: center;
+  border: none;
+}
+.rightimg {
   width: 400px;
   height: 500px;
   object-fit: cover;
 }
-main {
-  display: flex;
-}
-.container {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-}
-textarea {
-  width: 400px;
-  border: none;
-  display: block;
-  text-align: center;
+.innerDiv:focus {
+  background-color: blue;
+  color: white;
 }
