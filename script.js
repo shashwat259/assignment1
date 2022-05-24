@@ -13,7 +13,6 @@ const limitlength = (item, element) => {
   size = parseFloat(style);
   //calculating the threshold string length
   const check = document.createElement("div");
-  check.classList.add("check");
   check.style.fontSize = size + "px";
   check.style.whiteSpace = "nowrap";
   check.style.overflow = "hidden";
@@ -84,7 +83,7 @@ caption.addEventListener("input", (e) => {
   data[position].title = e.target.value;
 });
 //to update the web after changing the font size
-document.addEventListener("mouseover", (e) => {
+document.addEventListener("mouseenter", (e) => {
   listitems.forEach((item) => {
     item.querySelector(".imagelabel").innerText = limitlength(
       data[item.id].title,
