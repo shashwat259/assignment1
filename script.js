@@ -1,10 +1,33 @@
 import data from "./data.json" assert { type: "json" };
-
+import left_cont from "./left.js";
+import right_cont from "./right.js";
 var position = 0;
 var size;
 var threshold;
 
-const limitlength = (item) => {
+const limitlength = (item, element) => {
+  //fontsize of the innerdiv
+  var style = window
+    .getComputedStyle(element, null)
+    .getPropertyValue("font-size");
+  size = parseFloat(style);
+  //calculating the threshold string length
+  const check = document.createElement("div");
+  check.classList.add("check");
+  check.style.fontSize = size + "px";
+  check.style.whiteSpace = "nowrap";
+  check.style.overflow = "hidden";
+  check.style.width = "260px";
+  document.querySelector("body").append(check);
+  var str = "0";
+  for (threshold = 1; ; threshold++) {
+    check.innerText = str;
+    if (check.scrollWidth > check.clientWidth) {
+      break;
+    }
+    str += "0";
+  }
+  check.remove();
   if (item.length < threshold) {
     return item;
   }
@@ -15,58 +38,17 @@ const limitlength = (item) => {
   return newstr;
 };
 
-//creating the left column for the app
-const left_cont = document.querySelector(".leftContainer");
-data.forEach((item) => {
-  const newdiv = document.createElement("div");
-  newdiv.classList.add("innerDiv");
-  newdiv.setAttribute("tabindex", -1);
-  newdiv.setAttribute("id", position++);
-  newdiv.innerHTML = `
-  <img class="leftimg" alt="img" src="${item.previewImage}">
-  <div class="imagelabel"><div>
-  `;
-  left_cont.append(newdiv);
-  var style = window
-    .getComputedStyle(newdiv, null)
-    .getPropertyValue("font-size");
-  size = parseFloat(style);
-});
-
-//calculating the threshold string length
-const check = document.createElement("div");
-check.classList.add("check");
-check.style.fontSize = size + "px";
-check.style.whiteSpace = "nowrap";
-check.style.overflow = "hidden";
-check.style.width = "260px";
-document.querySelector("body").append(check);
-var str = "0";
-for (threshold = 1; threshold < 100; threshold++) {
-  check.innerText = str;
-  if (check.scrollWidth > check.clientWidth) {
-    break;
-  }
-  str += "0";
-}
-check.remove();
+const listitems = left_cont.querySelectorAll(".innerDiv");
+//selecting the first item by default
+listitems[0].focus();
 
 position = 0;
-//creating the right column for the app
-const right_cont = document.querySelector(".rightContainer");
-
-right_cont.innerHTML = `
-<img src=${data[position].previewImage} class="rightimg" alt="img">
-<textarea class="caption" >${data[position].title}</textarea>
-`;
-
-const listitems = left_cont.querySelectorAll(".innerDiv");
-listitems[0].focus();
 
 //adding click functionality
 listitems.forEach((item) => {
   item.querySelector(".imagelabel").innerText = limitlength(
-    data[item.id].title
+    data[item.id].title,
+    item
   );
   item.addEventListener("click", (e) => {
     position = item.id;
@@ -92,11 +74,21 @@ document.addEventListener("keydown", (e) => {
     .setAttribute("src", data[position].previewImage);
   right_cont.querySelector(".caption").value = data[position].title;
 });
-
+//changing the caption in the right column and reflecting in the left section too
 const caption = right_cont.querySelector(".caption");
 caption.addEventListener("input", (e) => {
   listitems[position].querySelector(".imagelabel").innerText = limitlength(
-    e.target.value
+    e.target.value,
+    listitems[position]
   );
   data[position].title = e.target.value;
+});
+//to update the web after changing the font size
+document.addEventListener("mouseover", (e) => {
+  listitems.forEach((item) => {
+    item.querySelector(".imagelabel").innerText = limitlength(
+      data[item.id].title,
+      item
+    );
+  });
 });
