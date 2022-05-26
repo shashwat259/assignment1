@@ -1,16 +1,14 @@
 import data from "./data.json" assert { type: "json" };
-import left_cont from "./left.js";
-import right_cont from "./right.js";
-var position = 0;
-var size;
-var threshold;
+import listContainer from "./listContainer.js";
+import imageContainer from "./imageContainer.js";
+let position = 0;
 
 const limitlength = (item, element) => {
   //fontsize of the innerdiv
-  var style = window
+  const style = window
     .getComputedStyle(element, null)
     .getPropertyValue("font-size");
-  size = parseFloat(style);
+  const size = parseFloat(style);
   //calculating the threshold string length
   const check = document.createElement("div");
   check.style.fontSize = size + "px";
@@ -18,7 +16,8 @@ const limitlength = (item, element) => {
   check.style.overflow = "hidden";
   check.style.width = "260px";
   document.querySelector("body").append(check);
-  var str = "0";
+  let str = "0";
+  let threshold;
   for (threshold = 1; ; threshold++) {
     check.innerText = str;
     if (check.scrollWidth > check.clientWidth) {
@@ -30,14 +29,14 @@ const limitlength = (item, element) => {
   if (item.length < threshold) {
     return item;
   }
-  var newstr =
+  const newstr =
     item.slice(0, (threshold - 3) / 2) +
     "..." +
     item.slice(-(threshold - 3 - (threshold - 3) / 2));
   return newstr;
 };
 
-const listitems = left_cont.querySelectorAll(".innerDiv");
+const listitems = listContainer.querySelectorAll(".innerDiv");
 //selecting the first item by default
 listitems[0].focus();
 
@@ -51,10 +50,10 @@ listitems.forEach((item) => {
   );
   item.addEventListener("click", (e) => {
     position = item.id;
-    right_cont
+    imageContainer
       .querySelector(".rightimg")
       .setAttribute("src", data[position].previewImage);
-    right_cont.querySelector(".caption").value = data[position].title;
+    imageContainer.querySelector(".caption").value = data[position].title;
   });
 });
 
@@ -68,13 +67,13 @@ document.addEventListener("keydown", (e) => {
     if (position < 0) position = data.length - 1;
   } else return;
   listitems[position].focus();
-  right_cont
+  imageContainer
     .querySelector(".rightimg")
     .setAttribute("src", data[position].previewImage);
-  right_cont.querySelector(".caption").value = data[position].title;
+  imageContainer.querySelector(".caption").value = data[position].title;
 });
 //changing the caption in the right column and reflecting in the left section too
-const caption = right_cont.querySelector(".caption");
+const caption = imageContainer.querySelector(".caption");
 caption.addEventListener("input", (e) => {
   listitems[position].querySelector(".imagelabel").innerText = limitlength(
     e.target.value,

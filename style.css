@@ -3,6 +3,7 @@
   height: 100%;
   display: flex;
   justify-content: center;
+  transform: translateY(300px);
 }
 .leftimg {
   width: 30px;
